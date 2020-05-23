@@ -1,0 +1,69 @@
+package org.jhapy.commons.utils;
+
+import java.util.Arrays;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.jhapy.commons.security.SecurityUtils;
+import org.jhapy.dto.utils.AppContextThread;
+
+/**
+ * @author jHapy Lead Dev.
+ * @version 1.0
+ * @since 2019-03-26
+ */
+public interface HasLogger {
+
+  default String getLoggerPrefix(final String methodName) {
+    String username = AppContextThread.getCurrentUsername() == null ? SecurityUtils.getUsername(): AppContextThread.getCurrentUsername();
+    String sessionId = AppContextThread.getCurrentSessionId() == null ? "local": AppContextThread.getCurrentSessionId();
+    MDC.put("jhapy.username", username );
+    MDC.put("jhapy.sessionId", sessionId);
+    String params = "";
+    if (StringUtils.isNotBlank(username)) {
+      params += username;
+    }
+    /*
+    if (StringUtils.isNotBlank(sessionId)) {
+      params += params.length() > 0 ? ", " + sessionId : sessionId;
+    }
+     */
+    return String.format("%-30s", methodName + "(" + params + ")") + " :: ";
+  }
+
+  default String getLoggerPrefix(final String methodName, Object... _params) {
+    String username = AppContextThread.getCurrentUsername() == null ? SecurityUtils.getUsername(): AppContextThread.getCurrentUsername();
+    String sessionId = AppContextThread.getCurrentSessionId() == null ? "local": AppContextThread.getCurrentSessionId();
+    MDC.put("jhapy.username", username );
+    MDC.put("jhapy.sessionId", sessionId);
+    StringBuilder params = new StringBuilder();
+    if (StringUtils.isNotBlank(username)) {
+      params.append(username).append(_params.length > 0 ? ", " : "");
+    }
+    /*
+    if (StringUtils.isNotBlank(sessionId)) {
+      params.append( params.length() > 0 ? ", " + sessionId : sessionId );
+    }
+     */
+    if (_params.length > 0) {
+      for (Object p : _params) {
+        if (p.getClass().isArray()) {
+          params.append(Arrays.asList((Object[]) p)).append(", ");
+        } else {
+          params.append(p).append(", ");
+        }
+      }
+      params = new StringBuilder(params.substring(0, params.length() - 2));
+    }
+    return String.format("%-30s", methodName + "(" + params + ")") + " :: ";
+  }
+
+  default Logger logger() {
+    return LoggerFactory.getLogger(getClass());
+  }
+
+  default Logger logger(Class aClass) {
+    return LoggerFactory.getLogger(aClass);
+  }
+}
