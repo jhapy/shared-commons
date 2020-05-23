@@ -27,63 +27,70 @@ jobs:
     - name: Repository Dispatch App-Base-Server
       uses: peter-evans/repository-dispatch@v1
       with:
-        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        token: ${{ secrets.repos_access_token }}
         repository: jhapy/app-base-server
         event-type: shared-commons-build
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
     - name: Repository Dispatch App-Audit-Server
       uses: peter-evans/repository-dispatch@v1
       with:
-        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        token: ${{ secrets.repos_access_token }}
         repository: jhapy/app-audit-server
         event-type: shared-commons-build
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
     - name: Repository Dispatch App-Authorization-Server
       uses: peter-evans/repository-dispatch@v1
       with:
-        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        token: ${{ secrets.repos_access_token }}
         repository: jhapy/app-authorization-server
         event-type: shared-commons-build
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
     - name: Repository Dispatch App-Frontend-Application
       uses: peter-evans/repository-dispatch@v1
       with:
-        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        token: ${{ secrets.repos_access_token }}
         repository: jhapy/app-frontend-application
         event-type: shared-commons-build
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
     - name: Repository Dispatch App-I18n-Server
       uses: peter-evans/repository-dispatch@v1
       with:
-        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        token: ${{ secrets.repos_access_token }}
         repository: jhapy/app-i18n-server
         event-type: shared-commons-build
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
     - name: Repository Dispatch App-Resource-Server
       uses: peter-evans/repository-dispatch@v1
       with:
-        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        token: ${{ secrets.repos_access_token }}
         repository: jhapy/app-resource-server
         event-type: shared-commons-build
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
     - name: Repository Dispatch Utils-Config-Server
       uses: peter-evans/repository-dispatch@v1
       with:
-        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        token: ${{ secrets.repos_access_token }}
         repository: jhapy/utils-config-server
         event-type: shared-commons-build
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
     - name: Repository Dispatch Utils-Discovery-Server
       uses: peter-evans/repository-dispatch@v1
       with:
-        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        token: ${{ secrets.repos_access_token }}
         repository: jhapy/utils-discovery-server
         event-type: shared-commons-build
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
     - name: Repository Dispatch Utils-Monitoring-Application
       uses: peter-evans/repository-dispatch@v1
       with:
-        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        token: ${{ secrets.repos_access_token }}
         repository: jhapy/utils-monitoring-application
         event-type: shared-commons-build
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+    - name: Slack Success
+      if: always()
+      uses: kpritam/slack-job-status-action@v1
+      with:
+        job-status: ${{ job.status }}
+        slack-bot-token: ${{ secrets.slack_bot_token }}
+        channel: framework-builds
