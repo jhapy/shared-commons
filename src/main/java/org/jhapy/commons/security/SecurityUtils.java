@@ -1,5 +1,7 @@
 package org.jhapy.commons.security;
 
+import java.util.Map;
+import java.util.Optional;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,6 +9,9 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.jhapy.dto.domain.security.SecurityUser;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 /**
  * SecurityUtils takes care of all such static operations that have to do with security and querying
@@ -20,6 +25,32 @@ public final class SecurityUtils {
 
   private SecurityUtils() {
     // Util methods only
+  }
+
+  public static Optional<String> getCurrentUserLogin() {
+    SecurityContext securityContext = SecurityContextHolder.getContext();
+    return Optional.ofNullable(extractPrincipal(securityContext.getAuthentication()));
+  }
+
+  private static String extractPrincipal(Authentication authentication) {
+    if (authentication == null) {
+      return null;
+    } else if (authentication.getPrincipal() instanceof UserDetails) {
+      UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+      return springSecurityUser.getUsername();
+    } else if (authentication instanceof JwtAuthenticationToken) {
+      return (String) ((JwtAuthenticationToken)authentication).getToken().getClaims().get("preferred_username");
+    } else if (authentication instanceof OAuth2Authentication) {
+      return (String) authentication.getPrincipal();
+    } else if (authentication.getPrincipal() instanceof DefaultOidcUser) {
+      Map<String, Object> attributes = ((DefaultOidcUser) authentication.getPrincipal()).getAttributes();
+      if (attributes.containsKey("preferred_username")) {
+        return (String) attributes.get("preferred_username");
+      }
+    } else if (authentication.getPrincipal() instanceof String) {
+      return (String) authentication.getPrincipal();
+    }
+    return null;
   }
 
   /**

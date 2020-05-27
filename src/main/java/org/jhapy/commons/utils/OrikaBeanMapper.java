@@ -68,6 +68,11 @@ public class OrikaBeanMapper extends ConfigurableMapper implements ApplicationCo
 
     ClassMapBuilder classMapBuilder = factory.classMap(aType, bType);
 
+    Class aParent = getParentClass( aType );
+    Class bParent = getParentClass( bType );
+
+    if ( aParent != null && bParent != null )
+      classMapBuilder = classMapBuilder.use( aParent, bParent );
     classMapBuilder = classMapBuilder.byDefault();
 
     classMapBuilder.register();

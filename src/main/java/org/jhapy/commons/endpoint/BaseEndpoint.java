@@ -18,11 +18,11 @@ public abstract class BaseEndpoint implements HasLogger {
   protected MappingContext getOrikaContext(BaseRemoteQuery query) {
     MappingContext context = new MappingContext.Factory().getContext();
 
-    context.setProperty("username", query.get_iso3Language());
-    context.setProperty("securityUserId", query.get_securityUserId());
-    context.setProperty("sessionId", query.get_sessionId());
-    context.setProperty("iso3Language", query.get_iso3Language());
-    context.setProperty("currentPosition", query.get_currentPosition());
+    context.setProperty("username", query.getQueryIso3Language());
+    context.setProperty("securityUserId", query.getQuerySecurityUserId());
+    context.setProperty("sessionId", query.getQuerySessionId());
+    context.setProperty("iso3Language", query.getQueryIso3Language());
+    context.setProperty("currentPosition", query.getQueryCurrentPosition());
 
     return context;
   }
