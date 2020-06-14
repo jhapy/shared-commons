@@ -16,24 +16,31 @@
  * limitations under the License.
  */
 
-package org.jhapy.commons.utils;
+package org.jhapy.commons.config;
 
 /**
- * @author jHapy Lead Dev.
- * @version 1.0
- * @since 2019-06-19
+ * JHapyConstants constants.
  */
-public interface SpringProfileConstants {
+public interface JHapyConstants {
 
+  /**
+   * Constant <code>SPRING_PROFILE_DEVELOPMENT="dev"</code>
+   */
   String SPRING_PROFILE_DEVELOPMENT = "dev";
-  String SPRING_PROFILE_DEVELOPMENT_GCP = "devgcp";
-
-  String SPRING_PROFILE_DEVELOPMENT_LOCAL_EUREKA = "local-eureka";
-
-  String SPRING_PROFILE_DEVELOPMENT_LOCAL = "local";
-  String SPRING_PROFILE_DEVELOPMENT_EUREKA = "eureka";
-
+  /**
+   * Constant <code>SPRING_PROFILE_TEST="test"</code>
+   */
   String SPRING_PROFILE_TEST = "test";
+  /**
+   * Constant <code>SPRING_PROFILE_PRODUCTION="prod"</code>
+   */
   String SPRING_PROFILE_PRODUCTION = "prod";
-  String SPRING_PROFILE_STAGING = "staging";
+  /**
+   * Spring profile used when deploying to Docker Swarm Constant <code>SPRING_PROFILE_DOCKER_SWARM="docker-swarm"</code>
+   */
+  String SPRING_PROFILE_DOCKER_SWARM = "docker-swarm";
+  /**
+   * Spring profile used to enable swagger Constant <code>SPRING_PROFILE_SWAGGER="swagger"</code>
+   */
+  String SPRING_PROFILE_SWAGGER = "swagger";
 }

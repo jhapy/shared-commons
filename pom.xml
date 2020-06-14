@@ -9,7 +9,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.2.6.RELEASE</version>
+    <version>2.3.0.RELEASE</version>
     <relativePath/>
   </parent>
 
@@ -47,6 +47,8 @@
     <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
     <commons-lang.version>2.6</commons-lang.version>
     <freemarker.version>2.3.29</freemarker.version>
+
+    <javers-spring-boot-starter-mongo.version>5.9.2</javers-spring-boot-starter-mongo.version>
   </properties>
 
   <dependencies>
@@ -65,20 +67,14 @@
       <artifactId>spring-security-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-oauth2-resource-server</artifactId>
-      <scope>compile</scope>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-client</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.springframework.security.oauth</groupId>
-      <artifactId>spring-security-oauth2</artifactId>
-      <version>2.3.6.RELEASE</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-oauth2-jose</artifactId>
-      <scope>compile</scope>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>javax.validation</groupId>
@@ -161,6 +157,29 @@
       <artifactId>hibernate-core</artifactId>
       <version>5.4.12.Final</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.javers</groupId>
+      <artifactId>javers-spring-boot-starter-mongo</artifactId>
+      <version>${javers-spring-boot-starter-mongo.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+      <version>2.9.2</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-bean-validators</artifactId>
+      <version>2.9.2</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 

@@ -1,3 +1,21 @@
+/*
+ * Copyright 2020-2020 the original author or authors from the JHapy project.
+ *
+ * This file is part of the JHapy project, see https://www.jhapy.org/ for more information.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.jhapy.commons.utils;
 
 import java.util.Map;
@@ -68,24 +86,27 @@ public class OrikaBeanMapper extends ConfigurableMapper implements ApplicationCo
 
     ClassMapBuilder classMapBuilder = factory.classMap(aType, bType);
 
-    Class aParent = getParentClass( aType );
-    Class bParent = getParentClass( bType );
+    Class aParent = getParentClass(aType);
+    Class bParent = getParentClass(bType);
 
-    if ( aParent != null && bParent != null )
-      classMapBuilder = classMapBuilder.use( aParent, bParent );
+    if (aParent != null && bParent != null) {
+      classMapBuilder = classMapBuilder.use(aParent, bParent);
+    }
     classMapBuilder = classMapBuilder.byDefault();
 
     classMapBuilder.register();
   }
 
-  private Class getParentClass( Class aClass ) {
-    if ( aClass.getSuperclass() == null )
+  private Class getParentClass(Class aClass) {
+    if (aClass.getSuperclass() == null) {
       return null;
+    }
 
-    if ( aClass.getSuperclass().equals( Object.class) )
+    if (aClass.getSuperclass().equals(Object.class)) {
       return aClass;
-    else
+    } else {
       return getParentClass(aClass.getSuperclass());
+    }
   }
 
   public ClassMapBuilder getClassMapBuilder(Class aType, Class bType) {
@@ -120,8 +141,8 @@ public class OrikaBeanMapper extends ConfigurableMapper implements ApplicationCo
 
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
     this.applicationContext = applicationContext;
-    System.setProperty(OrikaSystemProperties.WRITE_SOURCE_FILES,"true");
-    System.setProperty(OrikaSystemProperties.WRITE_CLASS_FILES,"true");
+    System.setProperty(OrikaSystemProperties.WRITE_SOURCE_FILES, "true");
+    System.setProperty(OrikaSystemProperties.WRITE_CLASS_FILES, "true");
     init();
   }
 }

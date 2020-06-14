@@ -16,28 +16,19 @@
  * limitations under the License.
  */
 
-package org.jhapy.commons.geocalc;
+package org.jhapy.commons.security;
 
 /**
- * Represents coordinates given in decimal-degrees (d) format
- *
- * @author rgallet
+ * Constants for Spring Security authorities.
  */
-public class DegreeCoordinate extends Coordinate {
+public final class AuthoritiesConstants {
 
-  final double decimalDegrees;
+  public static final String ADMIN = "ROLE_ADMIN";
 
-  DegreeCoordinate(double decimalDegrees) {
-    this.decimalDegrees = decimalDegrees;
-  }
+  public static final String USER = "ROLE_USER";
 
-  @Override
-  double degrees() {
-    return decimalDegrees;
-  }
+  public static final String ANONYMOUS = "ROLE_ANONYMOUS";
 
-  @Override
-  public String toString() {
-    return "DegreeCoordinate{" + "decimalDegrees=" + decimalDegrees + " degrees}";
+  private AuthoritiesConstants() {
   }
 }

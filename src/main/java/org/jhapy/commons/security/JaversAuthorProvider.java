@@ -16,28 +16,19 @@
  * limitations under the License.
  */
 
-package org.jhapy.commons.geocalc;
+package org.jhapy.commons.security;
 
-/**
- * Represents coordinates given in decimal-degrees (d) format
- *
- * @author rgallet
- */
-public class DegreeCoordinate extends Coordinate {
+import org.javers.spring.auditable.AuthorProvider;
+import org.jhapy.commons.config.Constants;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
-  final double decimalDegrees;
-
-  DegreeCoordinate(double decimalDegrees) {
-    this.decimalDegrees = decimalDegrees;
-  }
+@ConditionalOnProperty(name = "javers.enable", havingValue = "true", matchIfMissing = false)
+@Component
+public class JaversAuthorProvider implements AuthorProvider {
 
   @Override
-  double degrees() {
-    return decimalDegrees;
-  }
-
-  @Override
-  public String toString() {
-    return "DegreeCoordinate{" + "decimalDegrees=" + decimalDegrees + " degrees}";
+  public String provide() {
+    return SecurityUtils.getCurrentUserLogin().orElse(Constants.SYSTEM_ACCOUNT);
   }
 }

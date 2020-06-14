@@ -16,28 +16,21 @@
  * limitations under the License.
  */
 
-package org.jhapy.commons.geocalc;
+package org.jhapy.commons.config.apidoc.customizer;
+
+import springfox.documentation.spring.web.plugins.Docket;
 
 /**
- * Represents coordinates given in decimal-degrees (d) format
- *
- * @author rgallet
+ * Callback interface that can be implemented by beans wishing to further customize the {@link
+ * springfox.documentation.spring.web.plugins.Docket} in Springfox.
  */
-public class DegreeCoordinate extends Coordinate {
+@FunctionalInterface
+public interface SwaggerCustomizer {
 
-  final double decimalDegrees;
-
-  DegreeCoordinate(double decimalDegrees) {
-    this.decimalDegrees = decimalDegrees;
-  }
-
-  @Override
-  double degrees() {
-    return decimalDegrees;
-  }
-
-  @Override
-  public String toString() {
-    return "DegreeCoordinate{" + "decimalDegrees=" + decimalDegrees + " degrees}";
-  }
+  /**
+   * Customize the Springfox Docket.
+   *
+   * @param docket the Docket to customize
+   */
+  void customize(Docket docket);
 }

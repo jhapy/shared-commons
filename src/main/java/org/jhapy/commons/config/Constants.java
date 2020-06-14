@@ -16,28 +16,20 @@
  * limitations under the License.
  */
 
-package org.jhapy.commons.geocalc;
+package org.jhapy.commons.config;
 
 /**
- * Represents coordinates given in decimal-degrees (d) format
- *
- * @author rgallet
+ * Application constants.
  */
-public class DegreeCoordinate extends Coordinate {
+public final class Constants {
 
-  final double decimalDegrees;
+  // Regex for acceptable logins
+  public static final String LOGIN_REGEX = "^[_.@A-Za-z0-9-]*$";
 
-  DegreeCoordinate(double decimalDegrees) {
-    this.decimalDegrees = decimalDegrees;
-  }
+  public static final String SYSTEM_ACCOUNT = "system";
+  public static final String DEFAULT_LANGUAGE = "fr";
+  public static final String ANONYMOUS_USER = "anonymoususer";
 
-  @Override
-  double degrees() {
-    return decimalDegrees;
-  }
-
-  @Override
-  public String toString() {
-    return "DegreeCoordinate{" + "decimalDegrees=" + decimalDegrees + " degrees}";
+  private Constants() {
   }
 }

@@ -16,28 +16,24 @@
  * limitations under the License.
  */
 
-package org.jhapy.commons.geocalc;
+package org.jhapy.commons.security.oauth2;
 
-/**
- * Represents coordinates given in decimal-degrees (d) format
- *
- * @author rgallet
- */
-public class DegreeCoordinate extends Coordinate {
+import java.util.Collection;
+import org.jhapy.commons.security.SecurityUtils;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.stereotype.Component;
 
-  final double decimalDegrees;
+@Component
+public class JwtGrantedAuthorityConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
 
-  DegreeCoordinate(double decimalDegrees) {
-    this.decimalDegrees = decimalDegrees;
+  public JwtGrantedAuthorityConverter() {
+    // Bean extracting authority.
   }
 
   @Override
-  double degrees() {
-    return decimalDegrees;
-  }
-
-  @Override
-  public String toString() {
-    return "DegreeCoordinate{" + "decimalDegrees=" + decimalDegrees + " degrees}";
+  public Collection<GrantedAuthority> convert(Jwt jwt) {
+    return SecurityUtils.extractAuthorityFromClaims(jwt.getClaims());
   }
 }
