@@ -37,7 +37,7 @@ public abstract class BaseEndpoint implements HasLogger {
     MappingContext context = new MappingContext.Factory().getContext();
 
     context.setProperty("username", query.getQueryIso3Language());
-    context.setProperty("securityUserId", query.getQuerySecurityUserId());
+    context.setProperty("userId", query.getQueryUserId());
     context.setProperty("sessionId", query.getQuerySessionId());
     context.setProperty("iso3Language", query.getQueryIso3Language());
     context.setProperty("currentPosition", query.getQueryCurrentPosition());

@@ -54,10 +54,10 @@ public class SecurityFilter implements Filter, HasLogger {
       logger().trace(loggerPrefix + "Username = " + username);
       AppContextThread.setCurrentUsername(username);
     }
-    String securityUserId = req.getHeader("X-SecSecurityUserId");
-    if (StringUtils.isNotBlank(securityUserId)) {
-      logger().trace(loggerPrefix + "SecurityUserId = " + securityUserId);
-      AppContextThread.setCurrentSecurityUserId(securityUserId);
+    String userId = req.getHeader("X-SecUserId");
+    if (StringUtils.isNotBlank(userId)) {
+      logger().trace(loggerPrefix + "UserId = " + userId);
+      AppContextThread.setCurrentUserId(userId);
     }
     String sessionId = req.getHeader("X-SecSessionId");
     if (StringUtils.isNotBlank(sessionId)) {
