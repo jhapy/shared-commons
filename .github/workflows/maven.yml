@@ -59,6 +59,13 @@ jobs:
         repository: jhapy/app-resource-server
         event-type: shared-commons-build
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+    - name: Repository Dispatch App-Notification-Server
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{ secrets.repos_access_token }}
+        repository: jhapy/app-notification-server
+        event-type: shared-commons-build
+        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
     - name: Repository Dispatch Utils-Registry-Server
       uses: peter-evans/repository-dispatch@v1
       with:
