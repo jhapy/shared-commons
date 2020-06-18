@@ -40,7 +40,7 @@
 
     <orika-core.version>1.5.4</orika-core.version>
     <libphonenumber.version>8.12.2</libphonenumber.version>
-    <jackson-databind.version>2.9.9</jackson-databind.version>
+    <jackson-databind.version>2.10.0.pr1</jackson-databind.version>
 
     <commmons-net.version>3.6</commmons-net.version>
     <spring-data-commons.version>2.1.10.RELEASE</spring-data-commons.version>
