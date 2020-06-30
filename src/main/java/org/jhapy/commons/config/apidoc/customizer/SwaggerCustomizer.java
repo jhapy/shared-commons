@@ -18,7 +18,7 @@
 
 package org.jhapy.commons.config.apidoc.customizer;
 
-import springfox.documentation.spring.web.plugins.Docket;
+import jdk.javadoc.doclet.Doclet;
 
 /**
  * Callback interface that can be implemented by beans wishing to further customize the {@link
@@ -32,5 +32,5 @@ public interface SwaggerCustomizer {
    *
    * @param docket the Docket to customize
    */
-  void customize(Docket docket);
+  void customize(Doclet docket);
 }

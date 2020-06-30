@@ -19,9 +19,19 @@
 package org.jhapy.commons.config.apidoc;
 
 import static org.jhapy.commons.config.JHapyConstants.SPRING_PROFILE_SWAGGER;
-import static springfox.documentation.builders.PathSelectors.regex;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.OAuthFlow;
+import io.swagger.v3.oas.models.security.OAuthFlows;
+import io.swagger.v3.oas.models.security.Scopes;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.security.SecurityScheme.Type;
 import java.nio.ByteBuffer;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -29,10 +39,10 @@ import java.util.List;
 import java.util.Optional;
 import javax.servlet.Servlet;
 import org.jhapy.commons.config.AppProperties;
-import org.jhapy.commons.config.apidoc.customizer.JHapySwaggerCustomizer;
 import org.jhapy.commons.config.apidoc.customizer.SwaggerCustomizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -49,13 +59,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.DispatcherServlet;
-import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
-import springfox.documentation.schema.AlternateTypeRule;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * Springfox Swagger configuration.
@@ -65,17 +68,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @ConditionalOnWebApplication
-@ConditionalOnClass({
-    ApiInfo.class,
-    BeanValidatorPluginsConfiguration.class,
-    Servlet.class,
-    DispatcherServlet.class,
-    Docket.class
-})
 @Profile(SPRING_PROFILE_SWAGGER)
 @AutoConfigureAfter(AppProperties.class)
-@EnableSwagger2
-@Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerAutoConfiguration {
 
   static final String STARTING_MESSAGE = "Starting Swagger";
@@ -97,94 +91,52 @@ public class SwaggerAutoConfiguration {
     this.properties = appProperties.getSwagger();
   }
 
-  /**
-   * Springfox configuration for the API Swagger docs.
-   *
-   * @param swaggerCustomizers Swagger customizers
-   * @param alternateTypeRules alternate type rules
-   * @return the Swagger Springfox configuration
-   */
   @Bean
-  @ConditionalOnMissingBean(name = "swaggerSpringfoxApiDocket")
-  public Docket swaggerSpringfoxApiDocket(List<SwaggerCustomizer> swaggerCustomizers,
-      ObjectProvider<AlternateTypeRule[]> alternateTypeRules) {
-    log.debug(STARTING_MESSAGE);
-    StopWatch watch = new StopWatch();
-    watch.start();
+  public OpenAPI jHapyOpenAPI(@Value("${spring.application.name:application}") String appName) {
+    OAuthFlows authFlows = new OAuthFlows();
+    OAuthFlow passwordFlow = new OAuthFlow();
+    passwordFlow.setAuthorizationUrl(
+        "http://ilemmgt-keycloak:9080/auth/realms/ilemmgt/protocol/openid-connect/auth");
+    passwordFlow.setTokenUrl(
+        "http://ilemmgt-keycloak:9080/auth/realms/ilemmgt/protocol/openid-connect/token");
+    passwordFlow.setScopes(new Scopes().addString("openId", "openid"));
+    authFlows.clientCredentials(passwordFlow);
 
-    Docket docket = createDocket();
-
-    // Apply all SwaggerCustomizers orderly.
-    swaggerCustomizers.forEach(customizer -> customizer.customize(docket));
-
-    // Add all AlternateTypeRules if available in spring bean factory.
-    // Also you can add your rules in a customizer bean above.
-    Optional.ofNullable(alternateTypeRules.getIfAvailable()).ifPresent(docket::alternateTypeRules);
-
-    watch.stop();
-    log.debug(STARTED_MESSAGE, watch.getTotalTimeMillis());
-    return docket;
+    return new OpenAPI()
+        .components(new Components()
+            .addSecuritySchemes("openId", new SecurityScheme().type(Type.OAUTH2).flows(authFlows)))
+        .info(new Info().title(StringUtils.capitalize(appName) + " " + MANAGEMENT_TITLE_SUFFIX)
+            .description(MANAGEMENT_DESCRIPTION)
+            .version(properties.getVersion())
+            .termsOfService(properties.getTermsOfServiceUrl())
+            .contact(
+                new Contact().name(properties.getContactName()).email(properties.getContactEmail())
+                    .url(properties.getContactUrl()))
+            .license(new License().name(properties.getLicense()).url(properties.getLicenseUrl())));
   }
 
-  /**
-   * JHapy Swagger Customizer
-   *
-   * @return the Swagger Customizer of JHapy
-   */
-  @Bean
-  public JHapySwaggerCustomizer jHapySwaggerCustomizer() {
-    return new JHapySwaggerCustomizer(properties);
-  }
-
-  /**
-   * Springfox configuration for the management endpoints (actuator) Swagger docs.
-   *
-   * @param appName the application name
-   * @param managementContextPath the path to access management endpoints
-   * @return the Swagger Springfox configuration
-   */
   @Bean
   @ConditionalOnClass(name = "org.springframework.boot.actuate.autoconfigure.web.server.ManagementServerProperties")
   @ConditionalOnProperty("management.endpoints.web.base-path")
   @ConditionalOnExpression("'${management.endpoints.web.base-path}'.length() > 0")
-  @ConditionalOnMissingBean(name = "swaggerSpringfoxManagementDocket")
-  public Docket swaggerSpringfoxManagementDocket(
-      @Value("${spring.application.name:application}") String appName,
+  @ConditionalOnMissingBean(name = "openApiManagementDocket")
+  public GroupedOpenApi openApiManagementDocket(
       @Value("${management.endpoints.web.base-path}") String managementContextPath) {
 
-    ApiInfo apiInfo = new ApiInfo(
-        StringUtils.capitalize(appName) + " " + MANAGEMENT_TITLE_SUFFIX,
-        MANAGEMENT_DESCRIPTION,
-        properties.getVersion(),
-        "",
-        ApiInfo.DEFAULT_CONTACT,
-        "",
-        "",
-        new ArrayList<>()
-    );
-
-    return createDocket()
-        .apiInfo(apiInfo)
-        .useDefaultResponseMessages(properties.isUseDefaultResponseMessages())
-        .groupName(MANAGEMENT_GROUP_NAME)
-        .host(properties.getHost())
-        .protocols(new HashSet<>(Arrays.asList(properties.getProtocols())))
-        .forCodeGeneration(true)
-        .directModelSubstitute(ByteBuffer.class, String.class)
-        .genericModelSubstitutes(ResponseEntity.class)
-        .ignoredParameterTypes(Pageable.class)
-        .select()
-        .paths(regex(managementContextPath + ".*"))
+    return GroupedOpenApi.builder()
+        .group(MANAGEMENT_GROUP_NAME)
+        .pathsToMatch(managementContextPath + "/**")
         .build();
   }
 
-  /**
-   * <p>createDocket.</p>
-   *
-   * @return a {@link springfox.documentation.spring.web.plugins.Docket} object.
-   */
-  protected Docket createDocket() {
-    return new Docket(DocumentationType.SWAGGER_2);
+  @Bean
+  @ConditionalOnMissingBean(name = "openApiDefaultDocket")
+  public GroupedOpenApi openApiDefaultDocket() {
+
+    return GroupedOpenApi.builder()
+        .group("default")
+        .pathsToMatch(properties.getDefaultIncludePattern())
+        .build();
   }
 
 }
