@@ -34,8 +34,8 @@ import org.slf4j.MDC;
 public interface HasLogger {
 
   default String getLoggerPrefix(final String methodName) {
-    String username = AppContextThread.getCurrentUsername() == null ? SecurityUtils.getUsername()
-        : AppContextThread.getCurrentUsername();
+    String username = SecurityUtils.getCurrentUserLogin()
+        .orElse(AppContextThread.getCurrentUsername());
     String sessionId = AppContextThread.getCurrentSessionId() == null ? "local"
         : AppContextThread.getCurrentSessionId();
     MDC.put("jhapy.username", username);
@@ -53,8 +53,8 @@ public interface HasLogger {
   }
 
   default String getLoggerPrefix(final String methodName, Object... _params) {
-    String username = AppContextThread.getCurrentUsername() == null ? SecurityUtils.getUsername()
-        : AppContextThread.getCurrentUsername();
+    String username = SecurityUtils.getCurrentUserLogin()
+        .orElse(AppContextThread.getCurrentUsername());
     String sessionId = AppContextThread.getCurrentSessionId() == null ? "local"
         : AppContextThread.getCurrentSessionId();
     MDC.put("jhapy.username", username);
