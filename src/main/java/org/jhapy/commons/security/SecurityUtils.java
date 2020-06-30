@@ -82,38 +82,6 @@ public final class SecurityUtils {
     return null;
   }
 
-  /**
-   * Gets the user name of the currently signed in user.
-   *
-   * @return the user name of the current user or <code>null</code> if the user has not signed in
-   */
-  public static String getUsername() {
-    SecurityContext context = SecurityContextHolder.getContext();
-    if (context == null || context.getAuthentication() == null) {
-      return "Anonymous";
-    }
-    Object principal = context.getAuthentication().getPrincipal();
-    if (principal instanceof UserDetails) {
-      UserDetails userDetails = (UserDetails) context.getAuthentication().getPrincipal();
-      return userDetails.getUsername();
-    }
-    // Anonymous or no authentication.
-    return "Anonymous";
-  }
-
-  public static SecurityUser getSecurityUser() {
-    SecurityContext context = SecurityContextHolder.getContext();
-    if (context == null || context.getAuthentication() == null) {
-      return null;
-    }
-    Object principal = context.getAuthentication().getPrincipal();
-    if (principal instanceof SecurityUser) {
-      return (SecurityUser) principal;
-    }
-    // Anonymous or no authentication.
-    return null;
-  }
-
   public static boolean hasRoleAnyRole(String... roles) {
     return Arrays.stream(roles).anyMatch(SecurityUtils::hasRole);
   }
@@ -142,41 +110,6 @@ public final class SecurityUtils {
   private static boolean isUserLoggedIn(Authentication authentication) {
     return authentication != null
         && !(authentication instanceof AnonymousAuthenticationToken);
-  }
-
-  /**
-   * Check if a user is authenticated.
-   *
-   * @return true if the user is authenticated, false otherwise.
-   */
-  public static boolean isAuthenticated() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    return authentication != null &&
-        getAuthorities(authentication).noneMatch(AuthoritiesConstants.ANONYMOUS::equals);
-  }
-
-  /**
-   * If the current user has a specific authority (security role).
-   * <p>
-   * The name of this method comes from the {@code isUserInRole()} method in the Servlet API.
-   *
-   * @param authority the authority to check.
-   * @return true if the current user has the authority, false otherwise.
-   */
-  public static boolean isCurrentUserInRole(String authority) {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    return authentication != null &&
-        getAuthorities(authentication).anyMatch(authority::equals);
-  }
-
-  private static Stream<String> getAuthorities(Authentication authentication) {
-    Collection<? extends GrantedAuthority> authorities =
-        authentication instanceof JwtAuthenticationToken ?
-            extractAuthorityFromClaims(
-                ((JwtAuthenticationToken) authentication).getToken().getClaims())
-            : authentication.getAuthorities();
-    return authorities.stream()
-        .map(GrantedAuthority::getAuthority);
   }
 
   public static List<GrantedAuthority> extractAuthorityFromClaims(Map<String, Object> claims) {
