@@ -154,6 +154,10 @@ public class AppProperties {
 
     private boolean useDefaultResponseMessages = JHapyDefaults.Swagger.useDefaultResponseMessages;
 
+    private String oAuthAuthorizationUri;
+
+    private String oAuthTokenUri;
+
   }
 
   @Data
