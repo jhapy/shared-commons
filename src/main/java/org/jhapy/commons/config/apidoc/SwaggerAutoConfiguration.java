@@ -132,7 +132,6 @@ public class SwaggerAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(name = "openApiDefaultDocket")
   public GroupedOpenApi openApiDefaultDocket() {
-
     return GroupedOpenApi.builder()
         .group("default")
         .pathsToMatch(properties.getDefaultIncludePattern())
