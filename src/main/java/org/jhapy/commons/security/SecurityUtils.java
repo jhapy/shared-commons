@@ -26,7 +26,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.jhapy.commons.utils.HasLogger;
 import org.jhapy.dto.domain.security.SecurityUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,7 +48,9 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
  * @version 1.0
  * @since 2019-03-26
  */
-public final class SecurityUtils {
+public final class SecurityUtils implements HasLogger  {
+
+  private final static Logger logger = LoggerFactory.getLogger(SecurityUtils.class);
 
   private SecurityUtils() {
     // Util methods only
@@ -64,20 +69,23 @@ public final class SecurityUtils {
   private static String extractPrincipal(Authentication authentication) {
     if (authentication == null) {
       return null;
-    } else if (authentication.getPrincipal() instanceof UserDetails) {
-      UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
-      return springSecurityUser.getUsername();
-    } else if (authentication instanceof JwtAuthenticationToken) {
-      return (String) ((JwtAuthenticationToken) authentication).getToken().getClaims()
-          .get("preferred_username");
-    } else if (authentication.getPrincipal() instanceof DefaultOidcUser) {
-      Map<String, Object> attributes = ((DefaultOidcUser) authentication.getPrincipal())
-          .getAttributes();
-      if (attributes.containsKey("preferred_username")) {
-        return (String) attributes.get("preferred_username");
+    } else {
+     // logger.debug("extractPrincipal : " +authentication.getClass().getSimpleName() + " / " + authentication.getName() );
+      if (authentication.getPrincipal() instanceof UserDetails) {
+        UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+        return springSecurityUser.getUsername();
+      } else if (authentication instanceof JwtAuthenticationToken) {
+        return (String) ((JwtAuthenticationToken) authentication).getToken().getClaims()
+            .get("preferred_username");
+      } else if (authentication.getPrincipal() instanceof DefaultOidcUser) {
+        Map<String, Object> attributes = ((DefaultOidcUser) authentication.getPrincipal())
+            .getAttributes();
+        if (attributes.containsKey("preferred_username")) {
+          return (String) attributes.get("preferred_username");
+        }
+      } else if (authentication.getPrincipal() instanceof String) {
+        return (String) authentication.getPrincipal();
       }
-    } else if (authentication.getPrincipal() instanceof String) {
-      return (String) authentication.getPrincipal();
     }
     return null;
   }
