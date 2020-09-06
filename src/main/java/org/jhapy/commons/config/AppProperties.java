@@ -38,6 +38,7 @@ public class AppProperties {
   private final Metrics metrics = new Metrics();
   private final Swagger swagger = new Swagger();
   private final KeycloakAdmin keycloakAdmin = new KeycloakAdmin();
+  private final Libreoffice libreoffice = new Libreoffice();
 
   @Data
   public static class Hazelcast {
@@ -170,5 +171,11 @@ public class AppProperties {
     private String username;
     private String password;
     private String clientId;
+  }
+
+  @Data
+  public static final class Libreoffice {
+
+    private String path;
   }
 }
