@@ -5,8 +5,6 @@ on:
   repository_dispatch:
     types: [shared-dto-build]
 
-env:
-  ref:
 jobs:
   build:
 
