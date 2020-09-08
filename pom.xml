@@ -48,7 +48,7 @@
     <commons-lang.version>2.6</commons-lang.version>
     <freemarker.version>2.3.29</freemarker.version>
 
-    <javers-spring-boot-starter-mongo.version>5.11.1</javers-spring-boot-starter-mongo.version>
+    <javers-spring-boot-starter-mongo.version>5.11.2</javers-spring-boot-starter-mongo.version>
   </properties>
 
   <dependencies>
@@ -172,13 +172,13 @@
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-ui</artifactId>
-      <version>1.4.1</version>
+      <version>1.4.6</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-security</artifactId>
-      <version>1.4.1</version>
+      <version>1.4.6</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
