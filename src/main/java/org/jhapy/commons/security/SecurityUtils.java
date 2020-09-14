@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.jhapy.commons.config.JHapyDefaults.Security;
 import org.jhapy.commons.utils.HasLogger;
 import org.jhapy.dto.domain.security.SecurityUser;
 import org.slf4j.Logger;
@@ -90,6 +91,21 @@ public final class SecurityUtils implements HasLogger  {
     return null;
   }
 
+  public static String extractPicture() {
+    SecurityContext securityContext = SecurityContextHolder.getContext();
+    Authentication authentication = securityContext.getAuthentication();
+    if (authentication.getPrincipal() instanceof DefaultOidcUser) {
+      Map<String, Object> attributes = ((DefaultOidcUser) authentication.getPrincipal())
+          .getAttributes();
+      if (attributes.containsKey("picture")) {
+        return (String) attributes.get("picture");
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
   public static boolean hasRoleAnyRole(String... roles) {
     return Arrays.stream(roles).anyMatch(SecurityUtils::hasRole);
   }
