@@ -21,6 +21,7 @@ package org.jhapy.commons.security;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -120,6 +121,17 @@ public final class SecurityUtils implements HasLogger  {
 
     return userAuthentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
         .anyMatch(s -> s.equals(role));
+  }
+
+  public static List<String> getRoles() {
+    Authentication userAuthentication = SecurityContextHolder.getContext().getAuthentication();
+
+    // All other views require authentication
+    if (!isUserLoggedIn(userAuthentication)) {
+      return Collections.emptyList();
+    }
+    return userAuthentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(
+        Collectors.toList());
   }
 
   /**

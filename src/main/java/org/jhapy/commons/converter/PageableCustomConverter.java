@@ -60,10 +60,18 @@ public class PageableCustomConverter extends
     if (sort == null) {
       sort = Sort.unsorted();
     }
-    return Pageable.of(source.getPageNumber(),
-        source.getPageSize(),
-        sort.stream().map(
-            order -> order.isAscending() ? Pageable.Order.asc(order.getProperty())
-                : Pageable.Order.desc(order.getProperty())).collect(Collectors.toList()));
+    if (source.isUnpaged()) {
+      return Pageable.of(0,
+          0,
+          sort.stream().map(
+              order -> order.isAscending() ? Pageable.Order.asc(order.getProperty())
+                  : Pageable.Order.desc(order.getProperty())).collect(Collectors.toList()));
+    } else {
+      return Pageable.of(source.getPageNumber(),
+          source.getPageSize(),
+          sort.stream().map(
+              order -> order.isAscending() ? Pageable.Order.asc(order.getProperty())
+                  : Pageable.Order.desc(order.getProperty())).collect(Collectors.toList()));
+    }
   }
 }
