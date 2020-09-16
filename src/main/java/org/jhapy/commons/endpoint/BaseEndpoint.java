@@ -71,7 +71,8 @@ public abstract class BaseEndpoint implements HasLogger {
   }
 
   protected ResponseEntity<ServiceResult> handleResult(String loggerPrefix, Throwable throwable) {
-    logger().error(loggerPrefix + "Response KO with Exception : " + throwable.getMessage(), throwable);
+    logger()
+        .error(loggerPrefix + "Response KO with Exception : " + throwable.getMessage(), throwable);
     return ResponseEntity.ok(new ServiceResult<>(throwable));
   }
 }

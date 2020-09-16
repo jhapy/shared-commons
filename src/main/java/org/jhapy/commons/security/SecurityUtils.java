@@ -26,10 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import org.jhapy.commons.config.JHapyDefaults.Security;
 import org.jhapy.commons.utils.HasLogger;
-import org.jhapy.dto.domain.security.SecurityUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -50,7 +47,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
  * @version 1.0
  * @since 2019-03-26
  */
-public final class SecurityUtils implements HasLogger  {
+public final class SecurityUtils implements HasLogger {
 
   private final static Logger logger = LoggerFactory.getLogger(SecurityUtils.class);
 
@@ -72,7 +69,7 @@ public final class SecurityUtils implements HasLogger  {
     if (authentication == null) {
       return null;
     } else {
-     // logger.debug("extractPrincipal : " +authentication.getClass().getSimpleName() + " / " + authentication.getName() );
+      // logger.debug("extractPrincipal : " +authentication.getClass().getSimpleName() + " / " + authentication.getName() );
       if (authentication.getPrincipal() instanceof UserDetails) {
         UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
         return springSecurityUser.getUsername();
@@ -107,6 +104,7 @@ public final class SecurityUtils implements HasLogger  {
       return null;
     }
   }
+
   public static boolean hasRoleAnyRole(String... roles) {
     return Arrays.stream(roles).anyMatch(SecurityUtils::hasRole);
   }
