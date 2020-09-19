@@ -65,6 +65,11 @@ public final class SecurityUtils implements HasLogger {
     return Optional.ofNullable(extractPrincipal(securityContext.getAuthentication()));
   }
 
+  public static Optional<String> getCurrentUserId() {
+    SecurityContext securityContext = SecurityContextHolder.getContext();
+    return Optional.ofNullable(extractId(securityContext.getAuthentication()));
+  }
+
   private static String extractPrincipal(Authentication authentication) {
     if (authentication == null) {
       return null;
@@ -81,6 +86,30 @@ public final class SecurityUtils implements HasLogger {
             .getAttributes();
         if (attributes.containsKey("preferred_username")) {
           return (String) attributes.get("preferred_username");
+        }
+      } else if (authentication.getPrincipal() instanceof String) {
+        return (String) authentication.getPrincipal();
+      }
+    }
+    return null;
+  }
+
+  private static String extractId(Authentication authentication) {
+    if (authentication == null) {
+      return null;
+    } else {
+      // logger.debug("extractPrincipal : " +authentication.getClass().getSimpleName() + " / " + authentication.getName() );
+      if (authentication.getPrincipal() instanceof UserDetails) {
+        UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+        return springSecurityUser.getUsername();
+      } else if (authentication instanceof JwtAuthenticationToken) {
+        return (String) ((JwtAuthenticationToken) authentication).getToken().getClaims()
+            .get("sub");
+      } else if (authentication.getPrincipal() instanceof DefaultOidcUser) {
+        Map<String, Object> attributes = ((DefaultOidcUser) authentication.getPrincipal())
+            .getAttributes();
+        if (attributes.containsKey("sub")) {
+          return (String) attributes.get("sub");
         }
       } else if (authentication.getPrincipal() instanceof String) {
         return (String) authentication.getPrincipal();
