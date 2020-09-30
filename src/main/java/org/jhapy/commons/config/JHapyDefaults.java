@@ -103,7 +103,7 @@ public interface JHapyDefaults {
     String contactEmail = null;
     String license = null;
     String licenseUrl = null;
-    String defaultIncludePattern = "/api/.*";
+    String defaultIncludePattern = "/api/**";
     String host = null;
     String[] protocols = {};
     boolean useDefaultResponseMessages = true;
