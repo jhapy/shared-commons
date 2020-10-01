@@ -81,10 +81,8 @@ public class SwaggerAutoConfiguration {
   public OpenAPI jHapyOpenAPI(@Value("${spring.application.name:application}") String appName) {
     OAuthFlows authFlows = new OAuthFlows();
     OAuthFlow passwordFlow = new OAuthFlow();
-    passwordFlow.setAuthorizationUrl(
-        "http://ilemmgt-keycloak:9080/auth/realms/ilemmgt/protocol/openid-connect/auth");
-    passwordFlow.setTokenUrl(
-        "http://ilemmgt-keycloak:9080/auth/realms/ilemmgt/protocol/openid-connect/token");
+    passwordFlow.setAuthorizationUrl(properties.getOAuthAuthorizationUri());
+    passwordFlow.setTokenUrl(properties.getOAuthTokenUri());
     passwordFlow.setScopes(new Scopes().addString("openId", "openid"));
     authFlows.clientCredentials(passwordFlow);
 
