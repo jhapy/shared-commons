@@ -21,7 +21,7 @@
   <name>jHapy Framework - Commons</name>
 
   <properties>
-    <java.version>14</java.version>
+    <java.version>15</java.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -33,8 +33,8 @@
     <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
     <sonar-maven-plugin.version>3.6.1.1688</sonar-maven-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
+    <lombok.version>1.18.14</lombok.version>
 
-    <lombok.version>1.18.12</lombok.version>
     <validation-api.version>2.0.1.Final</validation-api.version>
     <jackson-annotations.version>2.9.9</jackson-annotations.version>
 

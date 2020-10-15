@@ -77,10 +77,10 @@ public class AppProperties {
 
   @Data
   public static class Security {
-
     private final ClientAuthorization clientAuthorization = new ClientAuthorization();
     private final RememberMe rememberMe = new RememberMe();
     private final OAuth2 oauth2 = new OAuth2();
+    private final TrustStore trustStore = new TrustStore();
 
     @Data
     public static class ClientAuthorization {
@@ -110,6 +110,14 @@ public class AppProperties {
       public void setAudience(@NotNull List<String> audience) {
         this.audience.addAll(audience);
       }
+    }
+
+    @Data
+    public static class TrustStore {
+
+      private String trustStorePath;
+      private String trustStorePassword;
+      private String defaultType;
     }
   }
 
