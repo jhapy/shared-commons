@@ -33,6 +33,7 @@ public interface SpringProfileConstants {
   String SPRING_PROFILE_DEVELOPMENT_LOCAL = "local";
   String SPRING_PROFILE_DEVELOPMENT_EUREKA = "eureka";
 
+  String SPRING_PROFILE_K8S = "k8s";
   String SPRING_PROFILE_TEST = "test";
   String SPRING_PROFILE_PRODUCTION = "prod";
   String SPRING_PROFILE_STAGING = "staging";
