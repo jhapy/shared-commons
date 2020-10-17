@@ -2,8 +2,7 @@ name: JHapy Shared Commons CI
 
 on:
   push:
-  repository_dispatch:
-    types: [shared-dto-build]
+  workflow_dispatch:
 
 jobs:
   build:
