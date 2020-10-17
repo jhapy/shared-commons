@@ -29,7 +29,48 @@ jobs:
             ${{ runner.os }}-maven-
       - name: Build with Maven
         run: mvn -Dmaven.test.skip -s .settings.xml -Dmaven.javadoc.skip -Dossrh_username=${{secrets.ossrh_username}} -Dossrh_password=${{secrets.ossrh_password}} --file pom.xml deploy
-
+      - name: Workflow Dispatch to app-base-server repository
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          repo: jhapy/app-base-server
+          token: ${{ secrets.repos_access_token }}
+          workflow: JHapy App Base Server CI
+      - name: Workflow Dispatch to app-audit-server repository
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          repo: jhapy/app-audit-server
+          token: ${{ secrets.repos_access_token }}
+          workflow: JHapy App Audit Server CI
+      - name: Workflow Dispatch to app-frontend-application repository
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          repo: jhapy/app-frontend-application
+          token: ${{ secrets.repos_access_token }}
+          workflow: JHapy App Frontend Application CI
+      - name: Workflow Dispatch to app-i18n-server repository
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          repo: jhapy/app-i18n-server
+          token: ${{ secrets.repos_access_token }}
+          workflow: JHapy App I18N Server CI
+      - name: Workflow Dispatch to app-resource-server repository
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          repo: jhapy/app-resource-server
+          token: ${{ secrets.repos_access_token }}
+          workflow: JHapy App Resource Server CI
+      - name: Workflow Dispatch to app-notification-server repository
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          repo: jhapy/app-notification-server
+          token: ${{ secrets.repos_access_token }}
+          workflow: JHapy App Notification Server CI
+      - name: Workflow Dispatch to utils-registry-server repository
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          repo: jhapy/utils-registry-server
+          token: ${{ secrets.repos_access_token }}
+          workflow: JHapy Utils Registry Server CI
       - name: Slack Success
         uses: 8398a7/action-slack@v3
         with:
