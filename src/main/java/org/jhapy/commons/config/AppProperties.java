@@ -118,6 +118,7 @@ public class AppProperties {
 
       private String trustStorePath;
       private String trustStorePassword;
+      private String trustStoreType;
       private Boolean debug;
     }
 
@@ -126,7 +127,7 @@ public class AppProperties {
 
       private String keyStorePath;
       private String keyStorePassword;
-      private String defaultType;
+      private String keyStoreType;
       private Boolean debug;
     }
   }
