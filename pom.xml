@@ -200,10 +200,6 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-idea-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
       </plugin>
       <plugin>
@@ -214,18 +210,14 @@
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
       </plugin>
-      <plugin>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok-maven-plugin</artifactId>
-      </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
-        <configuration>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+          <configuration>
             <source>${java.version}</source>
             <target>${java.version}</target>
             <annotationProcessorPaths>
@@ -240,10 +232,10 @@
                 <version>${lombok.version}</version>
               </path>
             </annotationProcessorPaths>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>${maven-javadoc-plugin.version}</version>
           <configuration>
@@ -254,14 +246,14 @@
           <groupId>pl.project13.maven</groupId>
           <artifactId>git-commit-id-plugin</artifactId>
           <version>${git-commit-id-plugin.version}</version>
-        <executions>
-          <execution>
-            <goals>
+          <executions>
+            <execution>
+              <goals>
                 <goal>revision</goal>
-            </goals>
+              </goals>
             </execution>
           </executions>
-            <configuration>
+          <configuration>
             <failOnNoGitDirectory>false</failOnNoGitDirectory>
             <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
             <generateGitPropertiesFile>true</generateGitPropertiesFile>
@@ -270,20 +262,20 @@
               <includeOnlyProperty>^git.commit.id.describe$</includeOnlyProperty>
               <includeOnlyProperty>^git.branch$</includeOnlyProperty>
             </includeOnlyProperties>
-            </configuration>
-      </plugin>
-      <plugin>
+          </configuration>
+        </plugin>
+        <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>${maven-clean-plugin.version}</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
           <version>${maven-enforcer-plugin.version}</version>
-        <executions>
-          <execution>
+          <executions>
+            <execution>
               <id>enforce-versions</id>
-            <goals>
+              <goals>
                 <goal>enforce</goal>
               </goals>
             </execution>
@@ -297,9 +289,9 @@
               </configuration>
               <goals>
                 <goal>enforce</goal>
-            </goals>
-          </execution>
-        </executions>
+              </goals>
+            </execution>
+          </executions>
           <configuration>
             <rules>
               <requireMavenVersion>
@@ -316,18 +308,18 @@
               </requireJavaVersion>
             </rules>
           </configuration>
-      </plugin>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
           <version>${maven-resources-plugin.version}</version>
-        <executions>
-          <execution>
+          <executions>
+            <execution>
               <id>default-resources</id>
               <phase>validate</phase>
-            <goals>
+              <goals>
                 <goal>copy-resources</goal>
-            </goals>
+              </goals>
               <configuration>
                 <outputDirectory>${project.build.directory}/classes</outputDirectory>
                 <useDefaultDelimiters>false</useDefaultDelimiters>
@@ -351,9 +343,9 @@
                   </resource>
                 </resources>
               </configuration>
-          </execution>
-        </executions>
-      </plugin>
+            </execution>
+          </executions>
+        </plugin>
         <plugin>
           <groupId>org.sonatype.plugins</groupId>
           <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -365,31 +357,7 @@
             <autoReleaseAfterClose>true</autoReleaseAfterClose>
           </configuration>
         </plugin>
-      <!--plugin>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok-maven-plugin</artifactId>
-        <version>${lombok-maven-plugin.version}</version>
-        <executions>
-          <execution>
-            <id>delombok</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>delombok</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <formatPreferences>
-            <javaLangAsFQN>skip</javaLangAsFQN>
-          </formatPreferences>
-          <verbose>true</verbose>
-          <addOutputDirectory>false</addOutputDirectory>
-          <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-          <outputDirectory>${project.build.directory}/delombok</outputDirectory>
-          <addOutputDirectory>false</addOutputDirectory>
-        </configuration>
-      </plugin-->
-    </plugins>
+      </plugins>
     </pluginManagement>
   </build>
 
