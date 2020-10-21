@@ -81,6 +81,7 @@ public class AppProperties {
     private final RememberMe rememberMe = new RememberMe();
     private final OAuth2 oauth2 = new OAuth2();
     private final TrustStore trustStore = new TrustStore();
+    private final KeyStore keyStore = new KeyStore();
 
     @Data
     public static class ClientAuthorization {
@@ -118,6 +119,15 @@ public class AppProperties {
       private String trustStorePath;
       private String trustStorePassword;
       private String defaultType;
+      private Boolean debug;
+    }
+
+    @Data
+    public static class KeyStore {
+
+      private String keyStorePath;
+      private String keyStorePassword;
+      private Boolean debug;
     }
   }
 
