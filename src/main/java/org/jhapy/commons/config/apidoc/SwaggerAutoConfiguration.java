@@ -30,6 +30,8 @@ import io.swagger.v3.oas.models.security.OAuthFlows;
 import io.swagger.v3.oas.models.security.Scopes;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.security.SecurityScheme.Type;
+import io.swagger.v3.oas.models.servers.Server;
+import java.util.Collections;
 import org.jhapy.commons.config.AppProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,9 +88,12 @@ public class SwaggerAutoConfiguration {
     passwordFlow.setScopes(new Scopes().addString("openId", "openid"));
     authFlows.clientCredentials(passwordFlow);
 
+    Server srv = new Server();
+    srv.setUrl(properties.getHost());
     return new OpenAPI()
         .components(new Components()
             .addSecuritySchemes("openId", new SecurityScheme().type(Type.OAUTH2).flows(authFlows)))
+        .servers(Collections.singletonList(srv))
         .info(new Info().title(StringUtils.capitalize(appName) + " " + MANAGEMENT_TITLE_SUFFIX)
             .description(MANAGEMENT_DESCRIPTION)
             .version(properties.getVersion())
