@@ -1,7 +1,9 @@
 package org.jhapy.commons.utils;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.beanutils.PropertyUtils;
 
 /**
  * @author Alexandre Clavaud.
@@ -21,5 +23,26 @@ public class BeanUtils {
         }
       }
     }.copyProperties(dest, source);
+  }
+
+  public static void copyNonNullProperties(Object destination,
+      Map<String, Object> source) {
+    String loggerPrefix = HasLoggerStatic.getLoggerPrefix("copyNonNullProperties");
+    try {
+      source.keySet().forEach(s -> {
+        try {
+          if (PropertyUtils.describe(destination).containsKey(s)) {
+            PropertyUtils.setProperty(destination, s, source.get(s));
+          }
+        } catch (Exception e22) {
+          HasLoggerStatic.logger(BeanUtils.class)
+              .error(loggerPrefix + "Error setting properties : {}", e22.getMessage());
+        }
+      });
+    } catch (Exception e1) {
+      HasLoggerStatic.logger(BeanUtils.class)
+          .error(loggerPrefix + "Error setting properties : {}", e1.getMessage());
+    }
+
   }
 }
