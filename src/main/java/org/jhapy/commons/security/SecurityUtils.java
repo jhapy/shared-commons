@@ -134,6 +134,22 @@ public final class SecurityUtils implements HasLogger {
     }
   }
 
+  public static String extractAttribute(String attribute) {
+    SecurityContext securityContext = SecurityContextHolder.getContext();
+    Authentication authentication = securityContext.getAuthentication();
+    if (authentication.getPrincipal() instanceof DefaultOidcUser) {
+      Map<String, Object> attributes = ((DefaultOidcUser) authentication.getPrincipal())
+          .getAttributes();
+      if (attributes.containsKey(attribute)) {
+        return (String) attributes.get(attribute);
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
   public static boolean hasRoleAnyRole(String... roles) {
     return Arrays.stream(roles).anyMatch(SecurityUtils::hasRole);
   }
