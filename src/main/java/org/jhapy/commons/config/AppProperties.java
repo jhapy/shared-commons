@@ -77,6 +77,7 @@ public class AppProperties {
 
   @Data
   public static class Security {
+
     private final ClientAuthorization clientAuthorization = new ClientAuthorization();
     private final RememberMe rememberMe = new RememberMe();
     private final OAuth2 oauth2 = new OAuth2();
