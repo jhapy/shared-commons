@@ -20,6 +20,7 @@ package org.jhapy.commons.utils;
 
 import java.util.Objects;
 import org.jhapy.dto.utils.LatLng;
+import org.jhapy.dto.utils.MapBounds;
 
 /**
  * @author jHapy Lead Dev.
@@ -54,6 +55,15 @@ public class DistanceCalculator {
    */
   public static float EARTH_DIAMETER = Float.parseFloat("12756.274");
 
+  public static double getRadius( MapBounds mapBounds ) {
+    double h = distance(mapBounds.getSouthWest().getLat(), mapBounds.getSouthWest().getLng(),
+            mapBounds.getSouthWest().getLat(),
+            mapBounds.getNorthEast().getLng(), "K");
+    double l = distance(mapBounds.getSouthWest().getLat(), mapBounds.getSouthWest().getLng()
+            , mapBounds.getNorthEast().getLat(),
+            mapBounds.getSouthWest().getLng(), "K");
+    return (h > l ? l * 1000 : h * 1000) / 2;
+  }
   /**
    * This routine calculates the distance between two points (given the latitude/longitude of those
    * points). It is being used to calculate the distance between two locations using GeoDataSource

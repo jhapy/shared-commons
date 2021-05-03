@@ -18,6 +18,7 @@
 
 package org.jhapy.commons.config;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +30,7 @@ import org.springframework.web.cors.CorsConfiguration;
 
 @Getter
 @ConfigurationProperties(prefix = "jhapy")
-public class AppProperties {
+public class AppProperties implements Serializable {
 
   private final Hazelcast hazelcast = new Hazelcast();
   private final RemoteServices remoteServices = new RemoteServices();
