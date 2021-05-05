@@ -37,18 +37,6 @@ jobs:
             ${{ secrets.GPG_SIGNING_KEY }}
       - name: Build with Maven
         run: mvn -Dmaven.test.skip -s .settings.xml -Dmaven.javadoc.skip -Dossrh_username=${{secrets.ossrh_username}} -Dossrh_password=${{secrets.ossrh_password}} --file pom.xml deploy
-      - name: Workflow Dispatch to utils-registry-server repository
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          repo: jhapy/utils-registry-server
-          token: ${{ secrets.repos_access_token }}
-          workflow: JHapy Utils Registry Server CI
-      - name: Workflow Dispatch to utils-registry-server K8S repository
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          repo: jhapy/utils-registry-server
-          token: ${{ secrets.repos_access_token }}
-          workflow: JHapy Utils Registry Server K8S CI
       - name: Workflow Dispatch to app-base-server repository
         uses: benc-uk/workflow-dispatch@v1
         with:
