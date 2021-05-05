@@ -33,37 +33,38 @@ public class DistanceCalculator {
   /**
    * The minimum allowed latitude
    */
-  public static float MIN_LATITUDE = Float.parseFloat("-90.0000");
+  public static final float MIN_LATITUDE = Float.parseFloat("-90.0000");
 
   /**
    * The maximum allowed latitude
    */
-  public static float MAX_LATITUDE = Float.parseFloat("90.0000");
+  public static final float MAX_LATITUDE = Float.parseFloat("90.0000");
 
   /**
    * The minimum allowed longitude
    */
-  public static float MIN_LONGITUDE = Float.parseFloat("-180.0000");
+  public static final float MIN_LONGITUDE = Float.parseFloat("-180.0000");
 
   /**
    * The maximum allowed longitude
    */
-  public static float MAX_LONGITUDE = Float.parseFloat("180.0000");
+  public static final float MAX_LONGITUDE = Float.parseFloat("180.0000");
 
   /**
    * The diameter of the Earth used in calculations
    */
-  public static float EARTH_DIAMETER = Float.parseFloat("12756.274");
+  public static final float EARTH_DIAMETER = Float.parseFloat("12756.274");
 
-  public static double getRadius( MapBounds mapBounds ) {
+  public static double getRadius(MapBounds mapBounds) {
     double h = distance(mapBounds.getSouthWest().getLat(), mapBounds.getSouthWest().getLng(),
-            mapBounds.getSouthWest().getLat(),
-            mapBounds.getNorthEast().getLng(), "K");
+        mapBounds.getSouthWest().getLat(),
+        mapBounds.getNorthEast().getLng(), "K");
     double l = distance(mapBounds.getSouthWest().getLat(), mapBounds.getSouthWest().getLng()
-            , mapBounds.getNorthEast().getLat(),
-            mapBounds.getSouthWest().getLng(), "K");
+        , mapBounds.getNorthEast().getLat(),
+        mapBounds.getSouthWest().getLng(), "K");
     return (h > l ? l * 1000 : h * 1000) / 2;
   }
+
   /**
    * This routine calculates the distance between two points (given the latitude/longitude of those
    * points). It is being used to calculate the distance between two locations using GeoDataSource
@@ -296,54 +297,31 @@ public class DistanceCalculator {
   }
 
   public static int getRadiusFromZoom(int zoom) {
-    switch (zoom) {
-      case 22:
-        return 4;
-      case 21:
-        return 9;
-      case 20:
-        return 18;
-      case 19:
-        return 36;
-      case 18:
-        return 72;
-      case 17:
-        return 145;
-      case 16:
-        return 290;
-      case 15:
-        return 580;
-      case 14:
-        return 1160;
-      case 13:
-        return 2321;
-      case 12:
-        return 4643;
-      case 11:
-        return 9292;
-      case 10:
-        return 18602;
-      case 9:
-        return 37278;
-      case 8:
-        return 74849;
-      case 7:
-        return 150858;
-      case 6:
-        return 305205;
-      case 5:
-        return 610019;
-      case 4:
-        return 1216870;
-      case 3:
-        return 2407702;
-      case 2:
-        return 3566218;
-      case 1:
-        return 4596052;
-      default:
-        return 0;
-    }
+    return switch (zoom) {
+      case 22 -> 4;
+      case 21 -> 9;
+      case 20 -> 18;
+      case 19 -> 36;
+      case 18 -> 72;
+      case 17 -> 145;
+      case 16 -> 290;
+      case 15 -> 580;
+      case 14 -> 1160;
+      case 13 -> 2321;
+      case 12 -> 4643;
+      case 11 -> 9292;
+      case 10 -> 18602;
+      case 9 -> 37278;
+      case 8 -> 74849;
+      case 7 -> 150858;
+      case 6 -> 305205;
+      case 5 -> 610019;
+      case 4 -> 1216870;
+      case 3 -> 2407702;
+      case 2 -> 3566218;
+      case 1 -> 4596052;
+      default -> 0;
+    };
   }
 
   public static int getZoomFromMeter(double meter) {

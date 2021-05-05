@@ -33,6 +33,7 @@ import org.jhapy.dto.utils.AppContextThread;
  * @since 2019-03-26
  */
 public interface HasLogger {
+
   default String getLoggerPrefix(final String methodName) {
     String username = SecurityUtils.getCurrentUserLogin()
         .orElse(AppContextThread.getCurrentUsername());
@@ -79,24 +80,41 @@ public interface HasLogger {
     return LogManager.getLogger(getClass());
   }
 
-  default void debug( String prefix, String message, Object ... params ) {
-    logger().debug(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
+  default void trace(String prefix, String message, Object... params) {
+    logger()
+        .trace(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
   }
 
-  default void info( String prefix, String message, Object ... params ) {
-    logger().info(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
+  default void debug(String prefix, String message, Object... params) {
+    logger()
+        .debug(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
   }
 
-  default void warn( String prefix, String message, Object ... params ) {
-    logger().warn(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
+  default void info(String prefix, String message, Object... params) {
+    logger()
+        .info(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
   }
 
-  default void error( String prefix, String message, Object ... params ) {
-    logger().warn(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
+  default void warn(String prefix, String message, Object... params) {
+    logger()
+        .warn(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
   }
 
-  default void error( String prefix,  Throwable exception , String message, Object ... params) {
-    logger().error(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)), exception );
+  default void warn(String prefix, Throwable exception, String message, Object... params) {
+    logger()
+        .warn(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)),
+            exception);
+  }
+
+  default void error(String prefix, String message, Object... params) {
+    logger()
+        .warn(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
+  }
+
+  default void error(String prefix, Throwable exception, String message, Object... params) {
+    logger()
+        .error(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)),
+            exception);
   }
 
   default Logger logger(Class aClass) {

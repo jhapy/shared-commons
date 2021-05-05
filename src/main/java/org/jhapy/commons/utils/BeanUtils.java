@@ -27,7 +27,7 @@ public class BeanUtils {
 
   public static void copyNonNullProperties(Object destination,
       Map<String, Object> source) {
-    String loggerPrefix = HasLoggerStatic.getLoggerPrefix("copyNonNullProperties");
+    var loggerPrefix = HasLoggerStatic.getLoggerPrefix("copyNonNullProperties");
     try {
       source.keySet().forEach(s -> {
         try {

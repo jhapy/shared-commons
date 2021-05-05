@@ -23,16 +23,7 @@ import org.jhapy.commons.utils.HasLogger;
 import org.jhapy.commons.utils.OrikaBeanMapper;
 import org.jhapy.dto.serviceQuery.BaseRemoteQuery;
 import org.jhapy.dto.serviceQuery.ServiceResult;
-import org.jhapy.dto.serviceQuery.generic.CountAnyMatchingQuery;
-import org.jhapy.dto.serviceQuery.generic.DeleteByStrIdQuery;
-import org.jhapy.dto.serviceQuery.generic.FindAnyMatchingQuery;
-import org.jhapy.dto.serviceQuery.generic.GetByStrIdQuery;
-import org.jhapy.dto.serviceQuery.generic.SaveQuery;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 public abstract class BaseEndpoint implements HasLogger {
 
@@ -81,7 +72,8 @@ public abstract class BaseEndpoint implements HasLogger {
 
   protected ResponseEntity<ServiceResult> handleResult(String loggerPrefix, Throwable throwable) {
     logger()
-        .error(loggerPrefix + "Response KO with Exception : " + throwable.getLocalizedMessage(), throwable);
+        .error(loggerPrefix + "Response KO with Exception : " + throwable.getLocalizedMessage(),
+            throwable);
     return ResponseEntity.ok(new ServiceResult<>(throwable));
   }
 }

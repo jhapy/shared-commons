@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
  * @since 01/05/2021
  */
 public class MyLogger {
-private Logger logger;
+
+  private final Logger logger;
+
   public MyLogger(Class aClass) {
     logger = LoggerFactory.getLogger(aClass);
   }

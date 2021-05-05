@@ -18,7 +18,6 @@
 
 package org.jhapy.commons.utils;
 
-import java.text.MessageFormat;
 import java.util.Map;
 import ma.glasnost.orika.Converter;
 import ma.glasnost.orika.Mapper;
@@ -70,8 +69,9 @@ public class OrikaBeanMapper extends ConfigurableMapper implements ApplicationCo
 
   @SuppressWarnings("rawtypes")
   public void addMapper(Mapper<?, ?> mapper) {
-    String loggerString = getLoggerPrefix("addMapper");
-    debug(loggerString, "Add : {0} <-> {1}", mapper.getAType().getName(), mapper.getBType().getName());
+    var loggerString = getLoggerPrefix("addMapper");
+    debug(loggerString, "Add : {0} <-> {1}", mapper.getAType().getName(),
+        mapper.getBType().getName());
 
     factory.classMap(mapper.getAType(), mapper.getBType())
         .byDefault()
@@ -80,7 +80,7 @@ public class OrikaBeanMapper extends ConfigurableMapper implements ApplicationCo
   }
 
   public void addMapper(Class aType, Class bType) {
-    String loggerString = getLoggerPrefix("addMapper");
+    var loggerString = getLoggerPrefix("addMapper");
     debug(loggerString, "Add : {0} <-> {1}", aType.getName(), bType.getName());
 
     ClassMapBuilder classMapBuilder = factory.classMap(aType, bType);
@@ -109,7 +109,7 @@ public class OrikaBeanMapper extends ConfigurableMapper implements ApplicationCo
   }
 
   public ClassMapBuilder getClassMapBuilder(Class aType, Class bType) {
-    String loggerString = getLoggerPrefix("getClassMapBuilder");
+    var loggerString = getLoggerPrefix("getClassMapBuilder");
     debug(loggerString, "Add : {0} <-> {1}", aType.getName(), bType.getName());
     return factory.classMap(aType, bType);
   }
@@ -118,8 +118,9 @@ public class OrikaBeanMapper extends ConfigurableMapper implements ApplicationCo
    * Registers a {@link Converter} into the {@link ConverterFactory}.
    */
   public void addConverter(Converter<?, ?> converter) {
-    String loggerString = getLoggerPrefix("addConverter");
-    debug(loggerString, "Add : {0} <-> {1}", converter.getAType().getName(), converter.getBType().getName() );
+    var loggerString = getLoggerPrefix("addConverter");
+    debug(loggerString, "Add : {0} <-> {1}", converter.getAType().getName(),
+        converter.getBType().getName());
     factory.getConverterFactory().registerConverter(converter);
   }
 

@@ -44,7 +44,7 @@ class MathUtil {
    * Restrict x to the range [low, high].
    */
   static double clamp(double x, double low, double high) {
-    return x < low ? low : (x > high ? high : x);
+    return x < low ? low : (Math.min(x, high));
   }
 
   /**

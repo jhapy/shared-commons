@@ -46,7 +46,7 @@ public class SecurityFilter implements Filter, HasLogger {
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
-    String loggerPrefix = getLoggerPrefix("doFilter");
+    var loggerPrefix = getLoggerPrefix("doFilter");
     HttpServletRequest req = (HttpServletRequest) request;
 
     String username = req.getHeader("X-SecUsername");

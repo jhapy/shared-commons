@@ -75,8 +75,7 @@ public final class SecurityUtils implements HasLogger {
       return null;
     } else {
       // logger.debug("extractPrincipal : " +authentication.getClass().getSimpleName() + " / " + authentication.getName() );
-      if (authentication.getPrincipal() instanceof UserDetails) {
-        UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+      if (authentication.getPrincipal() instanceof UserDetails springSecurityUser) {
         return springSecurityUser.getUsername();
       } else if (authentication instanceof JwtAuthenticationToken) {
         return (String) ((JwtAuthenticationToken) authentication).getToken().getClaims()
@@ -99,8 +98,7 @@ public final class SecurityUtils implements HasLogger {
       return null;
     } else {
       // logger.debug("extractPrincipal : " +authentication.getClass().getSimpleName() + " / " + authentication.getName() );
-      if (authentication.getPrincipal() instanceof UserDetails) {
-        UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+      if (authentication.getPrincipal() instanceof UserDetails springSecurityUser) {
         return springSecurityUser.getUsername();
       } else if (authentication instanceof JwtAuthenticationToken) {
         return (String) ((JwtAuthenticationToken) authentication).getToken().getClaims()

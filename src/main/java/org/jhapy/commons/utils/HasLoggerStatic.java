@@ -76,24 +76,31 @@ public interface HasLoggerStatic {
     return String.format("%-30s", methodName + "(" + paramsStr + ")") + " :: ";
   }
 
-  static void debug( Class aClass, String prefix, String message, Object ... params ) {
-    logger(aClass).debug(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
+  static void debug(Class aClass, String prefix, String message, Object... params) {
+    logger(aClass)
+        .debug(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
   }
 
-  static void info( Class aClass, String prefix, String message, Object ... params ) {
-    logger(aClass).info(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
+  static void info(Class aClass, String prefix, String message, Object... params) {
+    logger(aClass)
+        .info(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
   }
 
-  static void warn( Class aClass, String prefix, String message, Object ... params ) {
-    logger(aClass).warn(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
+  static void warn(Class aClass, String prefix, String message, Object... params) {
+    logger(aClass)
+        .warn(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
   }
 
-  static void error( Class aClass, String prefix, String message, Object ... params ) {
-    logger(aClass).warn(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
+  static void error(Class aClass, String prefix, String message, Object... params) {
+    logger(aClass)
+        .warn(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
   }
 
-  static void error( Class aClass, String prefix,  Throwable exception , String message, Object ... params) {
-    logger(aClass).error(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)), exception );
+  static void error(Class aClass, String prefix, Throwable exception, String message,
+      Object... params) {
+    logger(aClass)
+        .error(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)),
+            exception);
   }
 
   static Logger logger(Class aClass) {

@@ -23,7 +23,7 @@ import org.jhapy.commons.config.Constants;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-@ConditionalOnProperty(name = "javers.enable", havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(name = "javers.enable", havingValue = "true")
 @Component
 public class JaversAuthorProvider implements AuthorProvider {
 
