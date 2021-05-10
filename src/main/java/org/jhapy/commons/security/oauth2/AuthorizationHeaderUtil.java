@@ -72,7 +72,8 @@ public class AuthorizationHeaderUtil {
   }
 
   public Optional<String> getAuthorizationHeader(Authentication authentication) {
-    if (authentication instanceof OAuth2AuthenticationToken oauthToken) {
+    if (authentication instanceof OAuth2AuthenticationToken) {
+      OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
       String name = oauthToken.getName();
       String registrationId = oauthToken.getAuthorizedClientRegistrationId();
       OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
@@ -101,7 +102,8 @@ public class AuthorizationHeaderUtil {
         return Optional.of(authorizationHeaderValue);
       }
 
-    } else if (authentication instanceof JwtAuthenticationToken accessToken) {
+    } else if (authentication instanceof JwtAuthenticationToken) {
+      JwtAuthenticationToken accessToken = (JwtAuthenticationToken) authentication;
       String tokenValue = accessToken.getToken().getTokenValue();
       String authorizationHeaderValue = String
           .format("%s %s", OAuth2AccessToken.TokenType.BEARER.getValue(), tokenValue);

@@ -108,7 +108,7 @@ public interface HasLogger {
 
   default void error(String prefix, String message, Object... params) {
     logger()
-        .warn(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
+        .error(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
   }
 
   default void error(String prefix, Throwable exception, String message, Object... params) {
