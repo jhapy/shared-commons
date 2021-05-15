@@ -35,7 +35,7 @@ public class LatLngUtils {
 
   public static String getDisplayValue(LatLng latLng) {
     if (latLng != null) {
-      return String.format("(l:%s, L:%s)", decimalFormat.format(latLng.getLat()),
+      return String.format("(lat:%s, lng:%s)", decimalFormat.format(latLng.getLat()),
           decimalFormat.format(latLng.getLng()));
     } else {
       return "";

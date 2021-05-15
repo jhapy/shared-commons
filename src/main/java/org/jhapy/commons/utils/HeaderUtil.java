@@ -5,13 +5,13 @@ package org.jhapy.commons.utils;
  * @version 1.0
  * @since 08/05/2021
  */
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 
 /**
  * Utility class for HTTP headers creation.
@@ -35,7 +35,8 @@ public final class HeaderUtil {
     HttpHeaders headers = new HttpHeaders();
     headers.add("X-" + applicationName + "-alert", message);
     try {
-      headers.add("X-" + applicationName + "-params", URLEncoder.encode(param, StandardCharsets.UTF_8.toString()));
+      headers.add("X-" + applicationName + "-params",
+          URLEncoder.encode(param, StandardCharsets.UTF_8.toString()));
     } catch (UnsupportedEncodingException e) {
       // StandardCharsets are supported by every Java implementation so this exception will never happen
     }
@@ -51,7 +52,8 @@ public final class HeaderUtil {
    * @param param a {@link java.lang.String} object.
    * @return a {@link org.springframework.http.HttpHeaders} object.
    */
-  public static HttpHeaders createEntityCreationAlert(String applicationName, boolean enableTranslation, String entityName, String param) {
+  public static HttpHeaders createEntityCreationAlert(String applicationName,
+      boolean enableTranslation, String entityName, String param) {
     String message = enableTranslation ? applicationName + "." + entityName + ".created"
         : "A new " + entityName + " is created with identifier " + param;
     return createAlert(applicationName, message, param);
@@ -66,7 +68,8 @@ public final class HeaderUtil {
    * @param param a {@link java.lang.String} object.
    * @return a {@link org.springframework.http.HttpHeaders} object.
    */
-  public static HttpHeaders createEntityUpdateAlert(String applicationName, boolean enableTranslation, String entityName, String param) {
+  public static HttpHeaders createEntityUpdateAlert(String applicationName,
+      boolean enableTranslation, String entityName, String param) {
     String message = enableTranslation ? applicationName + "." + entityName + ".updated"
         : "A " + entityName + " is updated with identifier " + param;
     return createAlert(applicationName, message, param);
@@ -81,7 +84,8 @@ public final class HeaderUtil {
    * @param param a {@link java.lang.String} object.
    * @return a {@link org.springframework.http.HttpHeaders} object.
    */
-  public static HttpHeaders createEntityDeletionAlert(String applicationName, boolean enableTranslation, String entityName, String param) {
+  public static HttpHeaders createEntityDeletionAlert(String applicationName,
+      boolean enableTranslation, String entityName, String param) {
     String message = enableTranslation ? applicationName + "." + entityName + ".deleted"
         : "A " + entityName + " is deleted with identifier " + param;
     return createAlert(applicationName, message, param);
@@ -97,7 +101,8 @@ public final class HeaderUtil {
    * @param defaultMessage a {@link java.lang.String} object.
    * @return a {@link org.springframework.http.HttpHeaders} object.
    */
-  public static HttpHeaders createFailureAlert(String applicationName, boolean enableTranslation, String entityName, String errorKey, String defaultMessage) {
+  public static HttpHeaders createFailureAlert(String applicationName, boolean enableTranslation,
+      String entityName, String errorKey, String defaultMessage) {
     log.error("Entity processing failed, {}", defaultMessage);
 
     String message = enableTranslation ? "error." + errorKey : defaultMessage;
