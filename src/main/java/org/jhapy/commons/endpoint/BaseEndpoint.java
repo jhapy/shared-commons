@@ -18,7 +18,9 @@
 
 package org.jhapy.commons.endpoint;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import ma.glasnost.orika.MappingContext;
 import org.jhapy.commons.converter.CommonsConverterV2;
 import org.jhapy.commons.utils.HasLogger;
@@ -32,25 +34,20 @@ import org.springframework.http.ResponseEntity;
 
 public abstract class BaseEndpoint implements HasLogger {
 
-  protected OrikaBeanMapper mapperFacade;
   protected CommonsConverterV2 converter;
-
-  protected BaseEndpoint(OrikaBeanMapper mapperFacade ) {
-    this.mapperFacade = mapperFacade;
-  }
 
   protected BaseEndpoint(CommonsConverterV2 converter ) {
     this.converter = converter;
   }
 
-  protected MappingContext getOrikaContext(BaseRemoteQuery query) {
-    MappingContext context = new MappingContext.Factory().getContext();
+  protected Map<String,Object> getContext(BaseRemoteQuery query) {
+    Map<String,Object> context = new HashMap<>();
 
-    context.setProperty("username", query.getQueryUsername());
-    context.setProperty("userId", query.getQueryUserId());
-    context.setProperty("sessionId", query.getQuerySessionId());
-    context.setProperty("iso3Language", query.getQueryIso3Language());
-    context.setProperty("currentPosition", query.getQueryCurrentPosition());
+    context.put("username", query.getQueryUsername());
+    context.put("userId", query.getQueryUserId());
+    context.put("sessionId", query.getQuerySessionId());
+    context.put("iso3Language", query.getQueryIso3Language());
+    context.put("currentPosition", query.getQueryCurrentPosition());
 
     return context;
   }
@@ -78,13 +75,6 @@ public abstract class BaseEndpoint implements HasLogger {
       logger().error(loggerPrefix + "Response KO : " + result.getMessage());
       return ResponseEntity.ok(result);
     }
-  }
-
-  protected ResponseEntity<ServiceResult> handleResult(String loggerPrefix, Throwable throwable) {
-    logger()
-        .error(loggerPrefix + "Response KO with Exception : " + throwable.getLocalizedMessage(),
-            throwable);
-    return ResponseEntity.ok(new ServiceResult<>(throwable));
   }
 
   protected Page toDtoPage(org.springframework.data.domain.Page domain, List data ) {
