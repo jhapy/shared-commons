@@ -35,7 +35,7 @@ public class ServiceException extends AbstractThrowableProblem {
   private final String serviceName;
 
   public ServiceException(String defaultMessage, String serviceName) {
-    this(ErrorConstants.DEFAULT_TYPE, defaultMessage, serviceName);
+    this(ErrorConstants.SERVICE_EXCEPTION_TYPE, defaultMessage, serviceName);
   }
 
   public ServiceException(URI type, String defaultMessage, String serviceName) {

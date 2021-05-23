@@ -35,13 +35,13 @@ import org.jhapy.dto.utils.AppContextThread;
 public interface HasLoggerStatic {
 
   static String getLoggerPrefix(final String methodName) {
-    String username = SecurityUtils.getCurrentUserLogin()
+    var username = SecurityUtils.getCurrentUserLogin()
         .orElse(AppContextThread.getCurrentUsername());
-    String sessionId = AppContextThread.getCurrentSessionId() == null ? "local"
+    var sessionId = AppContextThread.getCurrentSessionId() == null ? "local"
         : AppContextThread.getCurrentSessionId();
     ThreadContext.put("jhapy.username", username);
     ThreadContext.put("jhapy.sessionId", sessionId);
-    String params = "";
+    var params = "";
     if (StringUtils.isNotBlank(username)) {
       params += username;
     }
@@ -50,9 +50,9 @@ public interface HasLoggerStatic {
   }
 
   static String getLoggerPrefix(final String methodName, Object... params) {
-    String username = SecurityUtils.getCurrentUserLogin()
+    var username = SecurityUtils.getCurrentUserLogin()
         .orElse(AppContextThread.getCurrentUsername());
-    String sessionId = AppContextThread.getCurrentSessionId() == null ? "local"
+    var sessionId = AppContextThread.getCurrentSessionId() == null ? "local"
         : AppContextThread.getCurrentSessionId();
     ThreadContext.put("jhapy.username", username);
     ThreadContext.put("jhapy.sessionId", sessionId);
@@ -76,30 +76,38 @@ public interface HasLoggerStatic {
     return String.format("%-30s", methodName + "(" + paramsStr + ")") + " :: ";
   }
 
+  static String getFormattedMessage( String prefix, String message, Object... params ) {
+    try {
+      return MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params));
+    } catch (IllegalArgumentException nfe) {
+      return prefix + message;
+    }
+  }
+
   static void debug(Class aClass, String prefix, String message, Object... params) {
     logger(aClass)
-        .debug(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
+        .debug(() -> getFormattedMessage(prefix, message, params));
   }
 
   static void info(Class aClass, String prefix, String message, Object... params) {
     logger(aClass)
-        .info(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
+        .info(() -> getFormattedMessage(prefix, message, params));
   }
 
   static void warn(Class aClass, String prefix, String message, Object... params) {
     logger(aClass)
-        .warn(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
+        .warn(() -> getFormattedMessage(prefix, message, params));
   }
 
   static void error(Class aClass, String prefix, String message, Object... params) {
     logger(aClass)
-        .warn(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)));
+        .warn(() -> getFormattedMessage(prefix, message, params));
   }
 
   static void error(Class aClass, String prefix, Throwable exception, String message,
       Object... params) {
     logger(aClass)
-        .error(() -> MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params)),
+        .error(() -> getFormattedMessage(prefix, message, params),
             exception);
   }
 

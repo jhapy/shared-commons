@@ -43,12 +43,9 @@ public class CommonsConverter {
   @Bean
   public void commonsConverters() {
     orikaBeanMapper.addMapper(Pageable.class, org.jhapy.dto.utils.Pageable.class);
-    orikaBeanMapper.addMapper(org.jhapy.dto.utils.Pageable.class, Pageable.class);
 
     orikaBeanMapper.addMapper(Point.class, org.jhapy.dto.utils.Point.class);
-    orikaBeanMapper.addMapper(org.jhapy.dto.utils.Point.class, Point.class);
 
     orikaBeanMapper.addMapper(PageImpl.class, Page.class);
-    orikaBeanMapper.addMapper(Page.class, PageImpl.class);
   }
 }
