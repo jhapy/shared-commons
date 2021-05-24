@@ -24,6 +24,7 @@ public class JHapyProblem {
   private String param;
   private String fieldErrors;
   private String path;
+  private String[] errors;
   private List<Violation> violations;
   private String[] stacktrace;
 }
