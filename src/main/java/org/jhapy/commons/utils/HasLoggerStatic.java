@@ -76,7 +76,7 @@ public interface HasLoggerStatic {
     return String.format("%-30s", methodName + "(" + paramsStr + ")") + " :: ";
   }
 
-  static String getFormattedMessage( String prefix, String message, Object... params ) {
+  static String getFormattedMessage(String prefix, String message, Object... params) {
     try {
       return MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params));
     } catch (IllegalArgumentException nfe) {

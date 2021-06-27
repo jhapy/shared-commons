@@ -2,7 +2,6 @@ package org.jhapy.commons.exception;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
 import lombok.Data;
 import org.zalando.problem.StatusType;
 import org.zalando.problem.violations.Violation;
@@ -14,6 +13,7 @@ import org.zalando.problem.violations.Violation;
  */
 @Data
 public class JHapyProblem {
+
   private URI type;
   private String title;
   private StatusType status;

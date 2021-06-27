@@ -80,7 +80,7 @@ public interface HasLogger {
     return LogManager.getLogger(getClass());
   }
 
-  default String getFormattedMessage( String prefix, String message, Object... params ) {
+  default String getFormattedMessage(String prefix, String message, Object... params) {
     try {
       return MessageFormat.format("{0}{1}", prefix, MessageFormat.format(message, params));
     } catch (IllegalArgumentException nfe) {
