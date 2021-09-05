@@ -44,6 +44,7 @@ public abstract class BaseEndpoint implements HasLogger {
     context.put("sessionId", query.getQuerySessionId());
     context.put("iso3Language", query.getQueryIso3Language());
     context.put("currentPosition", query.getQueryCurrentPosition());
+    context.put("externalClientId", query.getQueryExternalClientID());
 
     return context;
   }

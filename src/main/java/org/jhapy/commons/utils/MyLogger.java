@@ -15,5 +15,4 @@ public class MyLogger {
   public MyLogger(Class aClass) {
     logger = LoggerFactory.getLogger(aClass);
   }
-
 }

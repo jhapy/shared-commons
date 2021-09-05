@@ -40,6 +40,8 @@ public class AppProperties implements Serializable {
   private final Swagger swagger = new Swagger();
   private final KeycloakAdmin keycloakAdmin = new KeycloakAdmin();
   private final Libreoffice libreoffice = new Libreoffice();
+  private final Mailcow mailcow = new Mailcow();
+  private final Caldav caldav = new Caldav();
 
   @Data
   public static class Hazelcast {
@@ -80,8 +82,10 @@ public class AppProperties implements Serializable {
   public static class Security {
 
     private String realm;
-    private String contentSecurityPolicy = "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self' data:; font-src 'self' fonts.gstatic.com data:";
-    private String featurePolicy = "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; fullscreen 'self'; payment 'none'";
+    private String contentSecurityPolicy =
+        "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self' data:; font-src 'self' fonts.gstatic.com data:";
+    private String featurePolicy =
+        "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; fullscreen 'self'; payment 'none'";
     private final ClientAuthorization clientAuthorization = new ClientAuthorization();
     private final RememberMe rememberMe = new RememberMe();
     private final OAuth2 oauth2 = new OAuth2();
@@ -100,8 +104,7 @@ public class AppProperties implements Serializable {
     @Data
     public static class RememberMe {
 
-      @NotNull
-      private String key = JHapyDefaults.Security.RememberMe.key;
+      @NotNull private String key = JHapyDefaults.Security.RememberMe.key;
     }
 
     @Data
@@ -182,7 +185,6 @@ public class AppProperties implements Serializable {
     private String oAuthAuthorizationUri;
 
     private String oAuthTokenUri;
-
   }
 
   @Data
@@ -201,5 +203,26 @@ public class AppProperties implements Serializable {
   public static final class Libreoffice {
 
     private String path;
+  }
+
+  @Data
+  public static final class Caldav {
+
+    private String host;
+    private Integer port = 80;
+    private Boolean isSsl = Boolean.FALSE;
+  }
+
+  @Data
+  public static final class Mailcow {
+
+    private String apiKey;
+    private String serverUrl;
+
+    private Long defaultMaxMailboxesForDomain;
+    private Long defaultMaxQuotaPerMailbox;
+    private Long defaultMaxQuotaForDomain;
+    private Long defaultMailboxQuotaForDomain;
+    private Long defaultCountOfAliasesForDomain;
   }
 }
