@@ -18,15 +18,16 @@
 
 package org.jhapy.commons.config;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.cors.CorsConfiguration;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Getter
 @ConfigurationProperties(prefix = "jhapy")
@@ -215,7 +216,7 @@ public class AppProperties implements Serializable {
 
   @Data
   public static final class Mailcow {
-
+    private Boolean enabled = true;
     private String apiKey;
     private String serverUrl;
 
