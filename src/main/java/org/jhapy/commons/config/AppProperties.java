@@ -81,7 +81,7 @@ public class AppProperties implements Serializable {
 
   @Data
   public static class Security {
-
+    private Boolean useClientSecurity = Boolean.FALSE;
     private String realm;
     private String contentSecurityPolicy =
         "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self' data:; font-src 'self' fonts.gstatic.com data:";
