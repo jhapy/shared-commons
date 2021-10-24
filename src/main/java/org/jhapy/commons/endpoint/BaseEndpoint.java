@@ -18,15 +18,16 @@
 
 package org.jhapy.commons.endpoint;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.jhapy.commons.converter.CommonsConverterV2;
 import org.jhapy.commons.utils.HasLogger;
 import org.jhapy.dto.serviceQuery.BaseRemoteQuery;
 import org.jhapy.dto.serviceQuery.ServiceResult;
-import org.jhapy.dto.utils.Page;
+import org.jhapy.dto.utils.PageDTO;
 import org.springframework.http.ResponseEntity;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class BaseEndpoint implements HasLogger {
 
@@ -74,8 +75,8 @@ public abstract class BaseEndpoint implements HasLogger {
     }
   }
 
-  protected Page toDtoPage(org.springframework.data.domain.Page domain, List data) {
-    Page result = new Page<>();
+  protected PageDTO toDtoPage(org.springframework.data.domain.Page domain, List data) {
+    PageDTO result = new PageDTO<>();
     result.setTotalPages(domain.getTotalPages());
     result.setSize(domain.getSize());
     result.setTotalElements(domain.getTotalElements());
