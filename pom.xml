@@ -74,6 +74,8 @@
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
 
         <javers-spring-boot-starter-mongo.version>5.11.2</javers-spring-boot-starter-mongo.version>
+        <maven.compiler.source>14</maven.compiler.source>
+        <maven.compiler.target>14</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -211,6 +213,7 @@
             <artifactId>commons-beanutils</artifactId>
             <version>${commons-beanutils.version}</version>
         </dependency>
+
     </dependencies>
 
     <build>
