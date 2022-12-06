@@ -42,7 +42,7 @@
     <libphonenumber.version>8.12.2</libphonenumber.version>
     <jackson-databind.version>2.9.9</jackson-databind.version>
 
-    <commmons-net.version>3.6</commmons-net.version>
+    <commmons-net.version>3.9.0</commmons-net.version>
     <spring-data-commons.version>2.1.10.RELEASE</spring-data-commons.version>
     <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
     <commons-lang.version>2.6</commons-lang.version>
